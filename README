@@ -1,0 +1,16 @@
+Explanation of the Code:
+
+1.Inputs and Outputs:
+ A[3:0]: Minuend (4-bit).
+ B[3:0]: Subtrahend (4-bit).
+ Bin: Initial borrow input (0 in most cases).
+ Diff[3:0]: Difference result.
+ Bout: Final borrow output.
+2.Propagate and Generate Logic:
+ G: Borrow generate signals. A borrow is generated if the corresponding bit of the minuend is less than the subtrahend (G = ~A & B).
+ P: Borrow propagate signals. If the bits are unequal (P = A ^ B), the borrow is propagated.
+3.Borrow Look-Ahead Logic:
+ The borrow for each bit is calculated using both the generate and propagate signals from the current and previous bits.
+ The internal borrows (B_int[0], B_int[1], etc.) are computed in parallel.
+4.Difference Calculation:
+ The difference is calculated as Diff = A ^ B ^ Borrow, using the calculated borrows for each bit.
