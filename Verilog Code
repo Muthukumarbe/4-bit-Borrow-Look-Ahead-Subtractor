@@ -1,0 +1,29 @@
+`timescale 1ns / 1ps
+
+module sublook(
+    input [3:0] A, //Minuend
+    input [3:0] B, //Subtrahend
+    input Bin,  //Initial borrow input
+    output [3:0] Diff, 
+    output Bout
+    );
+	 wire[3:0]P,G; //propagete and generate signals
+	 wire[3:0]B_int; //Initial borrows
+	 
+	 //propagete and generate logic
+	 assign G=~A&B;
+	 assign p=A^B;
+	 
+	 //Borrow look-ahead logic
+	 assign B_int[0]=G[0]|(P[0]&Bin);
+	 assign B_int[1]=G[1]|(P[1]&B_int[0]);
+	 assign B_int[2]=G[2]|(P[2]&B_int[1]);
+	 assign B_int[3]=G[3]|(P[3]&B_int[2]);
+	 
+	 //Final borrow out
+	 assign Bout=B_int[3];
+	 
+	 //Diffrence calculation
+	 assign Diff=A^B^{B_int[2:0],Bin};
+	 
+endmodule
