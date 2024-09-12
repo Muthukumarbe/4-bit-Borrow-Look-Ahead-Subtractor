@@ -1,0 +1,40 @@
+`timescale 1ns / 1ps
+
+module subtest;
+
+	// Inputs
+	reg [3:0] A;
+	reg [3:0] B;
+	reg Bin;
+
+	// Outputs
+	wire [3:0] Diff;
+	wire Bout;
+
+	// Instantiate the Unit Under Test (UUT)
+	sublook uut (
+		.A(A), 
+		.B(B), 
+		.Bin(Bin), 
+		.Diff(Diff), 
+		.Bout(Bout)
+	);
+
+	initial begin
+		// Initialize Inputs
+		A=4'b1001; B=4'b0100; Bin=1'b0;
+		#100
+		A=4'b0101; B=4'b1101; Bin=1'b0;
+		#100
+		A=4'b1111; B=4'b0001; Bin=1'b0;
+		#100
+		A=4'b0010; B=4'b0011; Bin=1'b0;
+		#100
+		
+		$finish;
+        
+
+	end
+      
+endmodule
+
